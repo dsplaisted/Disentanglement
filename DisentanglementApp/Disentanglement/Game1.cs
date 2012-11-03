@@ -86,7 +86,9 @@ namespace WindowsPuzzleVisualizer
 			IsMouseVisible = true;
 
 			// Allow users to resize the window, and handle the Projection Matrix on Resize
+#if WINDOWS
 			Window.Title = "Disentanglement";
+#endif
 			Window.AllowUserResizing = true;
 			Window.ClientSizeChanged += OnClientSizeChanged;
 
@@ -104,7 +106,7 @@ namespace WindowsPuzzleVisualizer
             _pieceKeyMapping[Keys.D4] = "Red";
             _pieceKeyMapping[Keys.D5] = "Green";
             _pieceKeyMapping[Keys.D6] = "Purple";
-#if WINDOWS
+#if WINDOWS || __ANDROID__
 			System.Threading.ThreadPool.QueueUserWorkItem(delegate { Solve(); });
 #else
             Task.Run ( async () =>
@@ -114,7 +116,7 @@ namespace WindowsPuzzleVisualizer
 #endif
 		}
 
-#if WINDOWS
+#if WINDOWS || __ANDROID__
 		private void Solve()
 #else
         private async Task Solve()
