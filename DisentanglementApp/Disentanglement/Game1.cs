@@ -1,6 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+#if !WINDOWS
+using System.Threading.Tasks;
+#endif
+
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -98,11 +104,21 @@ namespace WindowsPuzzleVisualizer
             _pieceKeyMapping[Keys.D4] = "Red";
             _pieceKeyMapping[Keys.D5] = "Green";
             _pieceKeyMapping[Keys.D6] = "Purple";
-
+#if WINDOWS
 			System.Threading.ThreadPool.QueueUserWorkItem(delegate { Solve(); });
+#else
+            Task.Run ( async () =>
+                {
+                   await Solve();
+                });
+#endif
 		}
 
+#if WINDOWS
 		private void Solve()
+#else
+        private async Task Solve()
+#endif
 		{
 			var initialState = _puzzleState;
 			var solver = new Solver(initialState);
@@ -120,8 +136,9 @@ namespace WindowsPuzzleVisualizer
 			lock (_lockObject)
 			{
 				_moves = solver.GetMoveSequence();
-
+#if WINDOWS
                 Console.WriteLine("Moves: " + _moves.Length);
+#endif
 				_moveIndex = 0;
 
 				_puzzleState = _moves[_moveIndex].PuzzleState;
