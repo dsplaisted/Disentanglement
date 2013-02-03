@@ -99,7 +99,11 @@ namespace WindowsPuzzleVisualizer
             _pieceKeyMapping[Keys.D5] = "Green";
             _pieceKeyMapping[Keys.D6] = "Purple";
 
+#if NETFX_CORE
+            Windows.System.Threading.ThreadPool.RunAsync(delegate { Solve(); });
+#else
 			System.Threading.ThreadPool.QueueUserWorkItem(delegate { Solve(); });
+#endif
 		}
 
 		private void Solve()
@@ -121,7 +125,11 @@ namespace WindowsPuzzleVisualizer
 			{
 				_moves = solver.GetMoveSequence();
 
+#if NETFX_CORE
+                Debug.WriteLine("Moves: " + _moves.Length);
+#else
                 Console.WriteLine("Moves: " + _moves.Length);
+#endif
 				_moveIndex = 0;
 
 				_puzzleState = _moves[_moveIndex].PuzzleState;
