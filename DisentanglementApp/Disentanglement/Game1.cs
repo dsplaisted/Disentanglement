@@ -107,20 +107,14 @@ namespace WindowsPuzzleVisualizer
             _pieceKeyMapping[Keys.D5] = "Green";
             _pieceKeyMapping[Keys.D6] = "Purple";
 #if WINDOWS || __ANDROID__
-			System.Threading.ThreadPool.QueueUserWorkItem(delegate { Solve(); });
+#if NETFX_CORE
+            Windows.System.Threading.ThreadPool.RunAsync(delegate { Solve(); });
 #else
-            Task.Run ( async () =>
-                {
-                   await Solve();
-                });
+			System.Threading.ThreadPool.QueueUserWorkItem(delegate { Solve(); });
 #endif
 		}
 
-#if WINDOWS || __ANDROID__
 		private void Solve()
-#else
-        private async Task Solve()
-#endif
 		{
 			var initialState = _puzzleState;
 			var solver = new Solver(initialState);
@@ -138,7 +132,10 @@ namespace WindowsPuzzleVisualizer
 			lock (_lockObject)
 			{
 				_moves = solver.GetMoveSequence();
-#if WINDOWS
+
+#if NETFX_CORE
+                Debug.WriteLine("Moves: " + _moves.Length);
+#else
                 Console.WriteLine("Moves: " + _moves.Length);
 #endif
 				_moveIndex = 0;
