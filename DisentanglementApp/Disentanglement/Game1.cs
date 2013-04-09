@@ -16,7 +16,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using PuzzleSolver;
 
-#if WINDOWS_PHONE
+#if WINDOWS_PHONE || ANDROID || IOS
 using Microsoft.Xna.Framework.Input.Touch;
 #endif
 
@@ -106,7 +106,6 @@ namespace WindowsPuzzleVisualizer
             _pieceKeyMapping[Keys.D4] = "Red";
             _pieceKeyMapping[Keys.D5] = "Green";
             _pieceKeyMapping[Keys.D6] = "Purple";
-#if WINDOWS || __ANDROID__
 #if NETFX_CORE
             Windows.System.Threading.ThreadPool.RunAsync(delegate { Solve(); });
 #else
@@ -244,7 +243,7 @@ namespace WindowsPuzzleVisualizer
 			boxIB.SetData(boxIndices);
 			//boxData = null;
 			//boxIndices = null;
-#if WINDOWS_PHONE
+#if WINDOWS_PHONE || ANDROID || IOS
             TouchPanel.EnabledGestures = GestureType.FreeDrag | GestureType.Flick | GestureType.Tap;
 #endif
 
@@ -366,7 +365,7 @@ namespace WindowsPuzzleVisualizer
             bool commandBack = false;
             bool commandResetView = false;
 
-#if WINDOWS_PHONE
+#if WINDOWS_PHONE  || ANDROID || IOS
             TouchCollection touches = TouchPanel.GetState();
 
             if (touches.Count > 0)
@@ -684,7 +683,7 @@ namespace WindowsPuzzleVisualizer
                                     rotationMatrix;
                                 
 
-#if WINDOWS_PHONE
+#if WINDOWS_PHONE || ANDROID || IOS
                     Vector3 upViewVector = Vector3.Right;
 #else
                     Vector3 upViewVector = Vector3.Up;

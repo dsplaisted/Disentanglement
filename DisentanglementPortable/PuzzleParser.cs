@@ -4,13 +4,21 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
+#if ANDROID
+using Microsoft.Xna.Framework;
+#endif
+
 namespace PuzzleSolver
 {
     public static class PuzzleParser
     {
         public static PuzzleState GetGordionCubePuzzle()
         {
-            using (var sr = new StreamReader(typeof(PuzzleParser).Assembly.GetManifestResourceStream("PuzzleSolver.GordionCube.txt")))
+#if ANDROID
+            using (var sr = new StreamReader(TitleContainer.OpenStream("Content/GordionCube.txt")))
+#else
+			using (var sr = new StreamReader(typeof(PuzzleParser).Assembly.GetManifestResourceStream("PuzzleSolver.GordionCube.txt")))
+#endif
             {
                 string text = sr.ReadToEnd();
                 return ReadPuzzle(text);
