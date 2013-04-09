@@ -4,10 +4,6 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-#if ANDROID
-using Microsoft.Xna.Framework;
-#endif
-
 namespace PuzzleSolver
 {
     public static class PuzzleParser
