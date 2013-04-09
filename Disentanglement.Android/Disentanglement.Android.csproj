@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -15,13 +15,14 @@
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AssemblyName>Disentanglement.Android</AssemblyName>
+    <TargetFrameworkVersion>v2.3</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>False</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
+    <DefineConstants>DEBUG;ANDROID</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
@@ -62,22 +63,20 @@
     <AndroidResource Include="Resources\values\Styles.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="Assets\Content\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <AndroidAsset Include="..\DisentanglementApp\Disentanglement\bin\x86\Debug\Content\font.xnb">
       <Link>Assets\Content\font.xnb</Link>
     </AndroidAsset>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DisentanglementPortable\DisentanglementPortable.csproj">
-      <Project>{B1E90DB2-88F9-4639-AEFE-74BF4974B536}</Project>
-      <Name>DisentanglementPortable</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Development\CartBlanche\MonoGame\MonoGame.Framework\MonoGame.Framework.Android.csproj">
       <Project>{BA9476CF-99BA-4D03-92F2-73D2C5E58883}</Project>
       <Name>MonoGame.Framework.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DisentanglementPortable\DisentanglementPortable.Android.csproj">
+      <Project>{8F63FF9B-FDF9-47AF-A8E1-61632ADC13EA}</Project>
+      <Name>DisentanglementPortable.Android</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

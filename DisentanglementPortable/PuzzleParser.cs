@@ -14,11 +14,7 @@ namespace PuzzleSolver
     {
         public static PuzzleState GetGordionCubePuzzle()
         {
-#if ANDROID
-            using (var sr = new StreamReader(TitleContainer.OpenStream("Content/GordionCube.txt")))
-#else
 			using (var sr = new StreamReader(typeof(PuzzleParser).Assembly.GetManifestResourceStream("PuzzleSolver.GordionCube.txt")))
-#endif
             {
                 string text = sr.ReadToEnd();
                 return ReadPuzzle(text);

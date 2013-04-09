@@ -9,9 +9,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: global::Android.Runtime.ResourceDesignerAttribute("DisentanglementPortable.Android.Resource", IsApplication=false)]
+[assembly: global::Android.Runtime.ResourceDesignerAttribute("PuzzleSolver.Resource", IsApplication=false)]
 
-namespace DisentanglementPortable.Android
+namespace PuzzleSolver
 {
 	
 	
