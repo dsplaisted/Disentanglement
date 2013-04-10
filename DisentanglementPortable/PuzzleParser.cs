@@ -19,7 +19,11 @@ namespace PuzzleSolver
 
         public static PuzzleState ReadPuzzle(string s)
         {
+#if ANDROID || IOS
+			string[] lines = s.Split (new[] { "\r\n" }, StringSplitOptions.None);
+#else
             string[] lines = s.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+#endif
 
             List<string> pieceStrings = new List<string>();
 
