@@ -83,16 +83,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Development\CartBlanche\MonoGame\MonoGame.Framework\MonoGame.Framework.iOS.csproj">
-      <Project>{db8508bb-9849-4cc2-bc0f-8eb5dacb3c47}</Project>
-      <Name>MonoGame.Framework.iOS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DisentanglementPortable\DisentanglementPortable.iOS.csproj">
-      <Project>{03bafb3b-7d24-4201-8fac-b427b6309d45}</Project>
-      <Name>DisentanglementPortable.iOS</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -101,4 +91,14 @@
     <Reference Include="monotouch" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\DisentanglementPortable\DisentanglementPortable.iOS.csproj">
+      <Project>{CC8AB58F-90FB-48A8-8E04-F0CC1C8686A7}</Project>
+      <Name>DisentanglementPortable.iOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Development\CartBlanche\MonoGame\MonoGame.Framework\MonoGame.Framework.iOS.csproj">
+      <Project>{DB8508BB-9849-4CC2-BC0F-8EB5DACB3C47}</Project>
+      <Name>MonoGame.Framework.iOS</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
