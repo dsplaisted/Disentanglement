@@ -34,7 +34,7 @@ namespace WindowsPuzzleVisualizer
 		GraphicsDeviceManager graphics;
 		KeyboardState prevKeyboardState = Keyboard.GetState();
         SpriteBatch _spriteBatch;
-        SpriteFont _spriteFont;
+        // SpriteFont _spriteFont;
 
         int _buttonTop;
 
@@ -260,7 +260,7 @@ namespace WindowsPuzzleVisualizer
 			effect = new BasicEffect(GraphicsDevice);
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _spriteFont = Content.Load<SpriteFont>("font");
+            // _spriteFont = Content.Load<SpriteFont>("font");
 
 			ResetProjection();
 		}
