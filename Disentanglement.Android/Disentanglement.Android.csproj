@@ -54,11 +54,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="..\CompiledContent\Android\font.xnb">
-      <Link>Assets\Content\font.xnb</Link>
-    </AndroidAsset>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
   </ItemGroup>
@@ -81,5 +76,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Content\" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="..\CompiledContent\Android\Content\font.xnb">
+      <Link>Assets\Content\font.xnb</Link>
+    </AndroidAsset>
   </ItemGroup>
 </Project>
