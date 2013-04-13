@@ -244,7 +244,7 @@ namespace WindowsPuzzleVisualizer
 			//boxData = null;
 			//boxIndices = null;
 #if WINDOWS_PHONE || ANDROID || IOS
-            TouchPanel.EnabledGestures = GestureType.FreeDrag | GestureType.Flick | GestureType.Tap;
+            TouchPanel.EnabledGestures = GestureType.FreeDrag | GestureType.Flick | GestureType.Tap | GestureType.DoubleTap;
 #endif
 
 			base.Initialize();
@@ -397,22 +397,18 @@ namespace WindowsPuzzleVisualizer
                 }
                 else if (gesture.GestureType == GestureType.Tap)
                 {
-                    //Debug.WriteLine("Tap " + gesture.Position);
-                    if (gesture.Position.X >= _buttonTop)
-                    {
-                        if (gesture.Position.Y <= GraphicsDevice.Viewport.Height / 3)
-                        {
+                    if (gesture.Position.X <= GraphicsDevice.Viewport.Width / 2)
+                       {
                             commandForward = true;   
                         }
-                        else if (gesture.Position.Y <= GraphicsDevice.Viewport.Height * 2 / 3)
-                        {
-                            commandResetView = true;
-                        }
-                        else
+                        else if (gesture.Position.X > GraphicsDevice.Viewport.Width / 2 )
                         {
                             commandBack = true;
-                        }
-                    }
+                        }                    
+                }
+                else if (gesture.GestureType == GestureType.DoubleTap)
+                {
+                    commandResetView = true;
                 }
             }
 #endif
@@ -728,6 +724,9 @@ namespace WindowsPuzzleVisualizer
 					GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, 24, 0, 12);
 					
 				}
+
+
+               
 			}
 
 			base.Draw(gameTime);
