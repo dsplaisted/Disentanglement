@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -54,6 +54,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <AndroidAsset Include="..\CompiledContent\Android\font.xnb">
+      <Link>Assets\Content\font.xnb</Link>
+    </AndroidAsset>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
   </ItemGroup>
@@ -65,11 +70,6 @@
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup />
   <ItemGroup>
-    <AndroidAsset Include="..\DisentanglementApp\Disentanglement\bin\x86\Debug\Content\font.xnb">
-      <Link>Assets\Content\font.xnb</Link>
-    </AndroidAsset>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\Development\CartBlanche\MonoGame\MonoGame.Framework\MonoGame.Framework.Android.csproj">
       <Project>{BA9476CF-99BA-4D03-92F2-73D2C5E58883}</Project>
       <Name>MonoGame.Framework.Android</Name>
@@ -78,5 +78,8 @@
       <Project>{8F63FF9B-FDF9-47AF-A8E1-61632ADC13EA}</Project>
       <Name>DisentanglementPortable.Android</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Content\" />
   </ItemGroup>
 </Project>
