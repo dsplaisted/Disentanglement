@@ -312,9 +312,6 @@ namespace WindowsPuzzleVisualizer
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Update(GameTime gameTime)
 		{
-			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-				this.Exit();
-
 			KeyboardState keyboard = Keyboard.GetState();
 
 			if (keyboard.IsKeyDown(Keys.Escape))
