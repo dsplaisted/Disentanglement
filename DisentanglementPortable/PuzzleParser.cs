@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Reflection;
 
 namespace PuzzleSolver
 {
@@ -10,7 +11,7 @@ namespace PuzzleSolver
     {
         public static PuzzleState GetGordionCubePuzzle()
         {
-			using (var sr = new StreamReader(typeof(PuzzleParser).Assembly.GetManifestResourceStream("PuzzleSolver.GordionCube.txt")))
+			using (var sr = new StreamReader(typeof(PuzzleParser).GetTypeInfo().Assembly.GetManifestResourceStream("PuzzleSolver.GordionCube.txt")))
             {
                 string text = sr.ReadToEnd();
                 return ReadPuzzle(text);
@@ -19,11 +20,7 @@ namespace PuzzleSolver
 
         public static PuzzleState ReadPuzzle(string s)
         {
-#if ANDROID
 			string[] lines = s.Split (new[] { "\r\n" }, StringSplitOptions.None);
-#else
-            string[] lines = s.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-#endif
 
             List<string> pieceStrings = new List<string>();
 
