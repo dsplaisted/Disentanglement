@@ -1,6 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+#if NETFX_CORE
+using System.Threading.Tasks;
+#endif
+
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -10,7 +16,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using PuzzleSolver;
 
-#if WINDOWS_PHONE
+#if WINDOWS_PHONE || ANDROID || IOS
 using Microsoft.Xna.Framework.Input.Touch;
 #endif
 
@@ -28,7 +34,7 @@ namespace WindowsPuzzleVisualizer
 		GraphicsDeviceManager graphics;
 		KeyboardState prevKeyboardState = Keyboard.GetState();
         SpriteBatch _spriteBatch;
-        SpriteFont _spriteFont;
+        // SpriteFont _spriteFont;
 
         int _buttonTop;
 
@@ -80,7 +86,9 @@ namespace WindowsPuzzleVisualizer
 			IsMouseVisible = true;
 
 			// Allow users to resize the window, and handle the Projection Matrix on Resize
+#if WINDOWS
 			Window.Title = "Disentanglement";
+#endif
 			Window.AllowUserResizing = true;
 			Window.ClientSizeChanged += OnClientSizeChanged;
 
@@ -98,7 +106,6 @@ namespace WindowsPuzzleVisualizer
             _pieceKeyMapping[Keys.D4] = "Red";
             _pieceKeyMapping[Keys.D5] = "Green";
             _pieceKeyMapping[Keys.D6] = "Purple";
-
 #if NETFX_CORE
             Windows.System.Threading.ThreadPool.RunAsync(delegate { Solve(); });
 #else
@@ -236,8 +243,8 @@ namespace WindowsPuzzleVisualizer
 			boxIB.SetData(boxIndices);
 			//boxData = null;
 			//boxIndices = null;
-#if WINDOWS_PHONE
-            TouchPanel.EnabledGestures = GestureType.FreeDrag | GestureType.Flick | GestureType.Tap;
+#if WINDOWS_PHONE || ANDROID || IOS
+            TouchPanel.EnabledGestures = GestureType.FreeDrag | GestureType.Flick | GestureType.Tap | GestureType.DoubleTap;
 #endif
 
 			base.Initialize();
@@ -253,7 +260,7 @@ namespace WindowsPuzzleVisualizer
 			effect = new BasicEffect(GraphicsDevice);
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _spriteFont = Content.Load<SpriteFont>("font");
+            // _spriteFont = Content.Load<SpriteFont>("font");
 
 			ResetProjection();
 		}
@@ -358,7 +365,7 @@ namespace WindowsPuzzleVisualizer
             bool commandBack = false;
             bool commandResetView = false;
 
-#if WINDOWS_PHONE
+#if WINDOWS_PHONE  || ANDROID || IOS
             TouchCollection touches = TouchPanel.GetState();
 
             if (touches.Count > 0)
@@ -390,22 +397,18 @@ namespace WindowsPuzzleVisualizer
                 }
                 else if (gesture.GestureType == GestureType.Tap)
                 {
-                    //Debug.WriteLine("Tap " + gesture.Position);
-                    if (gesture.Position.X >= _buttonTop)
-                    {
-                        if (gesture.Position.Y <= GraphicsDevice.Viewport.Height / 3)
-                        {
+                    if (gesture.Position.X <= GraphicsDevice.Viewport.Width / 2)
+                       {
                             commandForward = true;   
                         }
-                        else if (gesture.Position.Y <= GraphicsDevice.Viewport.Height * 2 / 3)
-                        {
-                            commandResetView = true;
-                        }
-                        else
+                        else if (gesture.Position.X > GraphicsDevice.Viewport.Width / 2 )
                         {
                             commandBack = true;
-                        }
-                    }
+                        }                    
+                }
+                else if (gesture.GestureType == GestureType.DoubleTap)
+                {
+                    commandResetView = true;
                 }
             }
 #endif
@@ -676,7 +679,7 @@ namespace WindowsPuzzleVisualizer
                                     rotationMatrix;
                                 
 
-#if WINDOWS_PHONE
+#if WINDOWS_PHONE || ANDROID || IOS
                     Vector3 upViewVector = Vector3.Right;
 #else
                     Vector3 upViewVector = Vector3.Up;
@@ -721,6 +724,9 @@ namespace WindowsPuzzleVisualizer
 					GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, 24, 0, 12);
 					
 				}
+
+
+               
 			}
 
 			base.Draw(gameTime);
