@@ -1,12 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
-#if NETFX_CORE
 using System.Threading.Tasks;
-#endif
-
-
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -15,10 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using PuzzleSolver;
-
-#if WINDOWS_PHONE || ANDROID || IOS
 using Microsoft.Xna.Framework.Input.Touch;
-#endif
 
 using Point = PuzzleSolver.Point;
 using System.Diagnostics;
@@ -86,9 +78,7 @@ namespace WindowsPuzzleVisualizer
 			IsMouseVisible = true;
 
 			// Allow users to resize the window, and handle the Projection Matrix on Resize
-#if WINDOWS
 			Window.Title = "Disentanglement";
-#endif
 			Window.AllowUserResizing = true;
 			Window.ClientSizeChanged += OnClientSizeChanged;
 
@@ -132,9 +122,8 @@ namespace WindowsPuzzleVisualizer
 			{
 				_moves = solver.GetMoveSequence();
 
-#if NETFX_CORE
                 Debug.WriteLine("Moves: " + _moves.Length);
-#else
+#if !NETFX_CORE
                 Console.WriteLine("Moves: " + _moves.Length);
 #endif
 				_moveIndex = 0;
@@ -243,9 +232,7 @@ namespace WindowsPuzzleVisualizer
 			boxIB.SetData(boxIndices);
 			//boxData = null;
 			//boxIndices = null;
-#if WINDOWS_PHONE || ANDROID || IOS
             TouchPanel.EnabledGestures = GestureType.FreeDrag | GestureType.Flick | GestureType.Tap | GestureType.DoubleTap;
-#endif
 
 			base.Initialize();
 
@@ -362,7 +349,6 @@ namespace WindowsPuzzleVisualizer
             bool commandBack = false;
             bool commandResetView = false;
 
-#if WINDOWS_PHONE  || ANDROID || IOS
             TouchCollection touches = TouchPanel.GetState();
 
             if (touches.Count > 0)
@@ -381,16 +367,24 @@ namespace WindowsPuzzleVisualizer
                 float factor = 0.01f;
 
                 GestureSample gesture = TouchPanel.ReadGesture();
+                //  Windows store app does not rotate view sideways, so swap X and Y
+#if NETFX_CORE
+                float gestureDeltaX = gesture.Delta.Y;
+                float gestureDeltaY = gesture.Delta.X;
+#else
+                float gestureDeltaX = gesture.Delta.X;
+                float gestureDeltaY = -gesture.Delta.Y;
+#endif
                 if (gesture.GestureType == GestureType.FreeDrag)
                 {
                     rotationMatrix = rotationMatrix *
-                        Matrix.CreateRotationX(gesture.Delta.X * factor) *
-                        Matrix.CreateRotationY(-gesture.Delta.Y * factor);
+                        Matrix.CreateRotationX(gestureDeltaX * factor) *
+                        Matrix.CreateRotationY(gestureDeltaY * factor);
                 }
                 else if (gesture.GestureType == GestureType.Flick)
                 {
                     float seconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    _rotationVelocity = new Vector2(gesture.Delta.X * factor, -gesture.Delta.Y * factor);
+                    _rotationVelocity = new Vector2(gestureDeltaX * factor, gestureDeltaY * factor);
                 }
                 else if (gesture.GestureType == GestureType.Tap)
                 {
@@ -408,7 +402,6 @@ namespace WindowsPuzzleVisualizer
                     commandResetView = true;
                 }
             }
-#endif
 
             foreach (var kvp in _pieceKeyMapping)
             {
